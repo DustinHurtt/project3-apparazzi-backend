@@ -17,7 +17,9 @@ router.post("/new-photo", upload.single("image"), async (req, res) => {
     const result = await cloudinary.uploader.upload(req.file.path, {image_metadata: true});
      // Create new user
     let photo = new Photo({
-      title: req.body.title,
+      description: req.body.description,
+      tags: req.body.tags,
+      postDate: result.created_at,
       imageUrl: result.secure_url,
       cloudinary_id: result.public_id,
       latitude: result.image_metadata.GPSLatitude,
@@ -36,6 +38,7 @@ router.post("/new-photo", upload.single("image"), async (req, res) => {
       createDate: result.image_metadata.CreateDate 
     })
     .then(newlyCreatedPhotoFromDB => {
+      // console.log(result)
       res.json({newlyCreatedPhotoFromDB });
       console.log(newlyCreatedPhotoFromDB);
     })
@@ -47,7 +50,6 @@ router.post("/new-photo", upload.single("image"), async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-
 
 }); 
 

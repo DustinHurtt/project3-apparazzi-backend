@@ -9,6 +9,13 @@ require('dotenv/config')
 
 const isLoggedIn = require('../middleware/isLoggedIn')
 
+const cloudinary = require("../middleware/cloudinary");
+const upload = require("../middleware/multer");
+
+
+
+
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -99,5 +106,39 @@ router.get('/login-test', isLoggedIn, (req, res)=>{
   console.log('USER', req.user)
   res.json({message: "You are logged in"})
 })
+
+
+
+
+
+
+router.post("/:id/create-profile", upload.single("image"), async (req, res) => {
+  try {
+    // Upload image to cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
+     // Create new user
+
+
+    User.findByIdAndUpdate(req.params.id , { 
+      name: req.body.name,
+      bio: req.body.bio,
+      imageUrl: result.secure_url,
+
+    })
+    .then(newlyCreatedProfile => {
+      res.json({newlyCreatedProfile });
+      // console.log(newlyCreatedProfile);
+    })
+    .catch(error => console.log(`Error while creating a new profile: ${error}`));
+    // Save user
+
+    // res.json(photo);
+    // console.log(result)
+  } catch (err) {
+    console.log(err);
+  }
+
+}); 
+
 
 module.exports = router;
