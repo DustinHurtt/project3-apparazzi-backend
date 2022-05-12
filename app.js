@@ -11,6 +11,7 @@ require('dotenv/config')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var photosRouter = require('./routes/photos')
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use(cors())
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/photos', photosRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,7 +49,7 @@ app.use(function(err, req, res, next) {
 
 mongoose
   .connect(
-    process.env.MONGODB_URI || "mongodb://localhost/project-test-backend"
+    process.env.MONGODB_URI || "mongodb://localhost/project3-apparazzi-backend"
   )
   .then((x) =>
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
