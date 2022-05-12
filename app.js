@@ -7,6 +7,9 @@ var logger = require('morgan');
 const mongoose = require('mongoose')
 const cors = require('cors')
 
+// const Datauri = require('datauri')
+// const datauri = new Datauri()
+
 require('dotenv/config')
 
 var indexRouter = require('./routes/index');
@@ -49,7 +52,7 @@ app.use(function(err, req, res, next) {
 
 mongoose
   .connect(
-    process.env.MONGODB_URI || "mongodb://localhost/project3-apparazzi-backend"
+    process.env.MONGODB_URI || "mongodb://0.0.0.0/project3-apparazzi-backend"
   )
   .then((x) =>
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)

@@ -3,11 +3,15 @@ const { Schema, model } = mongoose;
  
 const photoSchema = new Schema(
   {
-    title: String,
     description: String,
+    tags: Array,
+    postDate: String,
     imageUrl: String,
-    metadata: Object
-    
+    cloudinary_id: String,
+    latitude: String,
+    longitude: String,
+    createDate: String,
+
   },
   {
     timestamps: true
