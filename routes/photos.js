@@ -61,7 +61,7 @@ router.post("/new-photo", isLoggedIn, upload.single("image"), async (req, res) =
 router.get('/all-photos', (req, res) => {
     Photo.find()
       .then(photosFromDB => {
-        // console.log(moviesFromDB);
+
         res.json({ photos: photosFromDB });
       })
       .catch(err => console.log(`Error while getting the movies from the DB: ${err}`));
@@ -71,7 +71,7 @@ router.get('/all-photos', (req, res) => {
 router.get('/:/user-photos', (req, res) => {
     Photo.find()
       .then(photosFromDB => {
-        // console.log(moviesFromDB);
+
         res.json({ photos: photosFromDB });
       })
       .catch(err => console.log(`Error while getting the movies from the DB: ${err}`));
