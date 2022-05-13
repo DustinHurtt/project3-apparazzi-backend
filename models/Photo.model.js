@@ -10,7 +10,10 @@ const photoSchema = new Schema(
     cloudinary_id: String,
     latitude: String,
     longitude: String,
-    createDate: String,
+    photographedDate: String,
+    contributor: {type: Schema.Types.ObjectId,
+          ref: "User",
+          required: true}
 
   },
   {

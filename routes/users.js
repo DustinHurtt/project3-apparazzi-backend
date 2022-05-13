@@ -25,14 +25,14 @@ router.get('/', function(req, res, next) {
 router.post('/signup', function(req, res, next) {
 
   if(!req.body.username || !req.body.password) {
-    return res.json({message: 'please fill out both fields'})
+    return res.status(400).json({message: 'please fill out both fields'})
   }
 
   User.findOne({username: req.body.username})
     .then((foundUser)=>{
 
       if(foundUser) {
-        return res.json({message: 'Username is already taken'})
+        return res.status(400).json({message: 'Username is already taken'})
       } else {
 
         const salt = bcrypt.genSaltSync(saltRounds)
@@ -55,13 +55,13 @@ router.post('/signup', function(req, res, next) {
           
         })        
         .catch((err)=>{
-          res.json(err.message)
+          res.status(400).json(err.message)
         })
       }
 
     })
     .catch((err)=>{
-      res.json(err.message)
+      res.status(400).json(err.message)
     })
 });
 
@@ -112,7 +112,7 @@ router.get('/login-test', isLoggedIn, (req, res)=>{
 
 
 
-router.post("/:id/create-profile", upload.single("image"), async (req, res) => {
+router.post("/:id/edit-profile-with-picture", upload.single("image"), async (req, res) => {
   try {
     // Upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
@@ -138,7 +138,18 @@ router.post("/:id/create-profile", upload.single("image"), async (req, res) => {
     console.log(err);
   }
 
-}); 
+});
+
+router.post('/:id/edit-profile-without-picture', (req, res, next) => {
+
+  User.findByIdAndUpdate(req.params.id, {...req.body})
+    .then(function (updatedProfile) {
+      res.json(updatedProfile);
+    })
+    .catch(function (error) {
+      res.json(error);
+    });
+});
 
 
 module.exports = router;

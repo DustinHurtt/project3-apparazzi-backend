@@ -7,11 +7,12 @@ const Photo = require('../models/Photo.model')
 
 const cloudinary = require("../middleware/cloudinary");
 const upload = require("../middleware/multer");
+const isLoggedIn = require('../middleware/isLoggedIn');
 
 
 
 
-router.post("/new-photo", upload.single("image"), async (req, res) => {
+router.post("/new-photo", isLoggedIn, upload.single("image"), async (req, res) => {
   try {
     // Upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path, {image_metadata: true});
@@ -24,7 +25,8 @@ router.post("/new-photo", upload.single("image"), async (req, res) => {
       cloudinary_id: result.public_id,
       latitude: result.image_metadata.GPSLatitude,
       longitude: result.image_metadata.GPSLongitude,
-      createDate: result.image_metadata.CreateDate
+      photographedDate: result.image_metadata.CreateDate,
+      contributor: req.user._id
     });
 
     Photo.create({ 
@@ -35,10 +37,12 @@ router.post("/new-photo", upload.single("image"), async (req, res) => {
       cloudinary_id: result.public_id,
       latitude: result.image_metadata.GPSLatitude,
       longitude: result.image_metadata.GPSLongitude,
-      createDate: result.image_metadata.CreateDate 
+      photographedDate: result.image_metadata.CreateDate,
+      contributor: req.user._id
     })
     .then(newlyCreatedPhotoFromDB => {
       // console.log(result)
+      
       res.json({newlyCreatedPhotoFromDB });
       console.log(newlyCreatedPhotoFromDB);
     })
@@ -55,6 +59,16 @@ router.post("/new-photo", upload.single("image"), async (req, res) => {
 
 
 router.get('/all-photos', (req, res) => {
+    Photo.find()
+      .then(photosFromDB => {
+        // console.log(moviesFromDB);
+        res.json({ photos: photosFromDB });
+      })
+      .catch(err => console.log(`Error while getting the movies from the DB: ${err}`));
+  });
+
+
+router.get('/:/user-photos', (req, res) => {
     Photo.find()
       .then(photosFromDB => {
         // console.log(moviesFromDB);
