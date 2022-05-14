@@ -14,7 +14,8 @@ const userSchema = new Schema(
         required: true},
     name: String,
     bio: String,
-    imageUrl: String
+    imageUrl: String,
+    location: String
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

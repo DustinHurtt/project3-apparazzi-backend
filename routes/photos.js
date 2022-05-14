@@ -4,6 +4,7 @@ var router = express.Router();
 
 
 const Photo = require('../models/Photo.model')
+const User = require('../models/User.model')
 
 const cloudinary = require("../middleware/cloudinary");
 const upload = require("../middleware/multer");
@@ -75,6 +76,38 @@ router.get('/:/user-photos', (req, res) => {
         res.json({ photos: photosFromDB });
       })
       .catch(err => console.log(`Error while getting the movies from the DB: ${err}`));
+  });
+
+  router.get('/:id/profile', (req, res, next) => {
+    User.findById(req.params.id)
+    .then(function(foundUser){
+      Photo.find({contributor: req.params.id})
+      .then(function(foundPhotos){
+        res.json({foundUser: foundUser, foundPhotos: foundPhotos}) })
+     
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  });
+  
+
+
+router.get('/:id/details', (req, res, next) => {
+
+    Photo.findById(req.params.id)
+    .populate({
+      path: "comments",
+      populate: {
+        path: "user",
+      },
+    })
+      .then(function (result) {
+        res.json({result});
+      })
+      .catch(function (error) {
+        res.json(error);
+      });
   });
 
 

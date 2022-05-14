@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const User = require('../models/User.model')
+const Photo = require('../models/Photo.model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const saltRounds = 10
@@ -109,9 +110,6 @@ router.get('/login-test', isLoggedIn, (req, res)=>{
 
 
 
-
-
-
 router.post("/:id/edit-profile-with-picture", upload.single("image"), async (req, res) => {
   try {
     // Upload image to cloudinary
@@ -149,6 +147,19 @@ router.post('/:id/edit-profile-without-picture', (req, res, next) => {
     .catch(function (error) {
       res.json(error);
     });
+});
+
+router.get('/my-profile', isLoggedIn, (req, res, next) => {
+  User.findById(req.user._id)
+  .then(function(foundUser){
+    Photo.find({contributor: req.user._id})
+    .then(function(foundPhotos){
+      res.json({foundUser: foundUser, foundPhotos: foundPhotos}) })
+   
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 });
 
 
