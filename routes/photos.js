@@ -68,6 +68,15 @@ router.get('/all-photos', (req, res) => {
       .catch(err => console.log(`Error while getting the movies from the DB: ${err}`));
   });
 
+router.get('/:tag/tag', (req, res) => {
+    Photo.find({"tags" : { $in : [`${req.params.tag}`]  } } )
+      .then(photosFromDB => {
+
+        res.json({ photos: photosFromDB });
+      })
+      .catch(err => console.log(`Error while getting the movies from the DB: ${err}`));
+  });
+
 
 router.get('/:/user-photos', (req, res) => {
     Photo.find()
