@@ -163,4 +163,20 @@ router.get('/my-profile', isLoggedIn, (req, res, next) => {
 });
 
 
+router.post('/delete-profile', isLoggedIn, (req, res, next) => {
+  User.findByIdAndDelete(req.user._id, function (err, docs) {
+    if (err){
+        console.log(err)
+    }
+    else{
+        console.log("Deleted : ", docs);
+    }
+  });
+  
+
+})
+
+
+
+
 module.exports = router;

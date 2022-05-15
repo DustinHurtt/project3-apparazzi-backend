@@ -65,7 +65,7 @@ router.get('/all-photos', (req, res) => {
 
         res.json({ photos: photosFromDB });
       })
-      .catch(err => console.log(`Error while getting the movies from the DB: ${err}`));
+      .catch(err => console.log(`Error while getting the photos from the DB: ${err}`));
   });
 
 router.get('/:tag/tag', (req, res) => {
@@ -74,7 +74,7 @@ router.get('/:tag/tag', (req, res) => {
 
         res.json({ photos: photosFromDB });
       })
-      .catch(err => console.log(`Error while getting the movies from the DB: ${err}`));
+      .catch(err => console.log(`Error while getting the photos from the DB: ${err}`));
   });
 
 
@@ -84,7 +84,7 @@ router.get('/:/user-photos', (req, res) => {
 
         res.json({ photos: photosFromDB });
       })
-      .catch(err => console.log(`Error while getting the movies from the DB: ${err}`));
+      .catch(err => console.log(`Error while getting the photos from the DB: ${err}`));
   });
 
   router.get('/:id/profile', (req, res, next) => {
