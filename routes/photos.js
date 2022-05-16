@@ -18,17 +18,17 @@ router.post("/new-photo", isLoggedIn, upload.single("imageUrl"), async (req, res
     // Upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path, {image_metadata: true});
      // Create new user
-    let photo = new Photo({
-      description: req.body.description,
-      tags: req.body.tags,
-      postDate: result.created_at,
-      imageUrl: result.secure_url,
-      cloudinary_id: result.public_id,
-      latitude: result.image_metadata.GPSLatitude,
-      longitude: result.image_metadata.GPSLongitude,
-      photographedDate: result.image_metadata.CreateDate,
-      contributor: req.user._id
-    });
+    // let photo = new Photo({
+    //   description: req.body.description,
+    //   tags: req.body.tags,
+    //   postDate: result.created_at,
+    //   imageUrl: result.secure_url,
+    //   cloudinary_id: result.public_id,
+    //   latitude: result.image_metadata.GPSLatitude,
+    //   longitude: result.image_metadata.GPSLongitude,
+    //   photographedDate: result.image_metadata.CreateDate,
+    //   contributor: req.user._id
+    // });
 
     Photo.create({ 
       description: req.body.description,
@@ -49,7 +49,7 @@ router.post("/new-photo", isLoggedIn, upload.single("imageUrl"), async (req, res
     })
     .catch(error => console.log(`Error while creating a new photo: ${error}`));
     // Save user
-    await photo.save();
+    // await photo.save();
     // res.json(photo);
     // console.log(result)
   } catch (err) {
@@ -59,8 +59,15 @@ router.post("/new-photo", isLoggedIn, upload.single("imageUrl"), async (req, res
 });
 
 router.post('/:id/add-after', isLoggedIn, (req, res, next) => {
+  console.log("Params", req.params.id)
 
-  Photo.findByIdAndUpdate(req.params.id, {...req.body}, {new: true})
+  Photo.findByIdAndUpdate(req.params.id, { 
+
+    description: req.body.description,
+    tags: req.body.tags,
+
+  })
+
     .then(function (updatedPhoto) {
       res.json(updatedPhoto);
     })

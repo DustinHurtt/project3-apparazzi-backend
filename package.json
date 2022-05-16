@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production node ./bin/www",
-    "dev": "NODE_ENV=production nodemon ./bin/www",
-    "dev-compass": "NODE_ENV=development nodemon ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -30,5 +29,9 @@
     "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^2.0.16",
     "path": "^0.12.7"
+  },
+  "engines": {
+    "node": "18.1.0",
+    "npm": "8.10.0"
   }
 }

@@ -54,7 +54,7 @@ app.use(function(err, req, res, next) {
 
 mongoose
   .connect(
-    process.env.NODE.ENV === "production" ? process.env.MONGODB_URI : "mongodb://0.0.0.0/project3-apparazzi-backend"
+    process.env.MONGODB_URI || "mongodb://0.0.0.0/project3-apparazzi-backend"
   )
   .then((x) =>
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
