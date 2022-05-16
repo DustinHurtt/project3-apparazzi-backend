@@ -110,16 +110,15 @@ router.get('/login-test', isLoggedIn, (req, res)=>{
 
 
 
-router.post("/:id/edit-profile-with-picture", upload.single("image"), async (req, res) => {
+router.post("/edit-profile-with-picture", isLoggedIn, upload.single("imageUrl"), async (req, res) => {
   try {
     // Upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
      // Create new user
 
 
-    User.findByIdAndUpdate(req.params.id , { 
-      name: req.body.name,
-      bio: req.body.bio,
+    User.findByIdAndUpdate(req.user._id , { 
+
       imageUrl: result.secure_url,
 
     })
@@ -138,9 +137,9 @@ router.post("/:id/edit-profile-with-picture", upload.single("image"), async (req
 
 });
 
-router.post('/:id/edit-profile-without-picture', (req, res, next) => {
+router.post('/edit-profile-without-picture', isLoggedIn, (req, res, next) => {
 
-  User.findByIdAndUpdate(req.params.id, {...req.body})
+  User.findByIdAndUpdate(req.user._id, {...req.body}, {new: true})
     .then(function (updatedProfile) {
       res.json(updatedProfile);
     })

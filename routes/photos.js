@@ -13,7 +13,7 @@ const isLoggedIn = require('../middleware/isLoggedIn');
 
 
 
-router.post("/new-photo", isLoggedIn, upload.single("image"), async (req, res) => {
+router.post("/new-photo", isLoggedIn, upload.single("imageUrl"), async (req, res) => {
   try {
     // Upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path, {image_metadata: true});
@@ -45,7 +45,7 @@ router.post("/new-photo", isLoggedIn, upload.single("image"), async (req, res) =
       // console.log(result)
       
       res.json({newlyCreatedPhotoFromDB });
-      console.log(newlyCreatedPhotoFromDB);
+      console.log("try", newlyCreatedPhotoFromDB);
     })
     .catch(error => console.log(`Error while creating a new photo: ${error}`));
     // Save user
@@ -56,7 +56,18 @@ router.post("/new-photo", isLoggedIn, upload.single("image"), async (req, res) =
     console.log(err);
   }
 
-}); 
+});
+
+router.post('/:id/add-after', isLoggedIn, (req, res, next) => {
+
+  Photo.findByIdAndUpdate(req.params.id, {...req.body}, {new: true})
+    .then(function (updatedPhoto) {
+      res.json(updatedPhoto);
+    })
+    .catch(function (error) {
+      res.json(error);
+    });
+});
 
 
 router.get('/all-photos', (req, res) => {

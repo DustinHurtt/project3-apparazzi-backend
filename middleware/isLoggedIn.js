@@ -9,7 +9,10 @@ const isLoggedIn = async (req, res, next) => {
       }
       try {
         const tokenInfo = jwt.verify(token, process.env.SECRET);
-        console.log(tokenInfo);
+        // console.log(tokenInfo);
+        // console.log("Files", req.files);
+        // console.log("FILE", req.file);
+        // console.log('REQ', req)
         //If you have req.payload, change line 12 to:
         //req.payload = tokenInfo;
         req.user = tokenInfo;
