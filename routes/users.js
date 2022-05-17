@@ -52,7 +52,7 @@ router.post('/signup', function(req, res, next) {
             process.env.SECRET,
             {algorithm: 'HS256', expiresIn: '24hr'}
           )
-          res.json({token: token})
+          res.json({token: token, id: createdUser._id})
           
         })        
         .catch((err)=>{
@@ -90,7 +90,7 @@ router.post('/login', function(req, res, next) {
           process.env.SECRET,
           {algorithm: 'HS256', expiresIn: '24hr'}
         )
-        res.json({token: token})       
+        res.json({token: token, id: foundUser._id})       
       } else {
         return res.json({message: 'Username or Password is incorrect'})      
       }
