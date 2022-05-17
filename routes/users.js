@@ -163,17 +163,23 @@ router.get('/my-profile', isLoggedIn, (req, res, next) => {
 
 
 router.post('/delete-profile', isLoggedIn, (req, res, next) => {
-  User.findByIdAndDelete(req.user._id, function (err, docs) {
-    if (err){
-        console.log(err)
-    }
-    else{
-        console.log("Deleted : ", docs);
-    }
+  User.findById(req.user._id) 
+    .then(foundUser=>{
+      const doesMatch = bcrypt.compareSync(req.body.password, foundUser.password)
+      if (doesMatch) {
+        foundUser.delete()
+        res.json({message: "success"})
+      } else {
+        res.status(401).json({message: "password doesn't match"})
+      }
+    })
+    .catch(error=>{
+      res.status(400).json(error.message)
+    })
   });
   
 
-})
+
 
 
 
