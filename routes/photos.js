@@ -86,11 +86,12 @@ router.get('/all-photos', (req, res) => {
       .catch(err => console.log(`Error while getting the photos from the DB: ${err}`));
   });
 
-router.get('/:tag/tag', (req, res) => {
-    Photo.find({"tags" : { $in : [`${req.params.tag}`]  } } )
+router.get('/:id/tag', (req, res) => {
+    Photo.find({"tags" : { $in : [`${req.params.id}`]  } } )
       .then(photosFromDB => {
 
         res.json({ photos: photosFromDB });
+        console.log("TagsfromDB", photosFromDB)
       })
       .catch(err => console.log(`Error while getting the photos from the DB: ${err}`));
   });
