@@ -152,6 +152,7 @@ router.get('/my-profile', isLoggedIn, (req, res, next) => {
   User.findById(req.user._id)
   .then(function(foundUser){
     Photo.find({contributor: req.user._id})
+    .populate({path: "contributor"})
     .then(function(foundPhotos){
       res.json({foundUser: foundUser, foundPhotos: foundPhotos}) })
    

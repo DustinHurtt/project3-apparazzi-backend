@@ -7,6 +7,9 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.8.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "cloudinary": "^1.29.1",
@@ -20,6 +23,7 @@
     "exif-parser": "^0.1.12",
     "exifreader": "^4.5.0",
     "express": "~4.16.1",
+    "heroku": "^7.60.2",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
