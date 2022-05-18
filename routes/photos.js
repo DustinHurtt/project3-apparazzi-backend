@@ -10,6 +10,17 @@ const cloudinary = require("../middleware/cloudinary");
 const upload = require("../middleware/multer");
 const isLoggedIn = require('../middleware/isLoggedIn');
 
+let query = [
+  {
+      path:"comments",
+      model: "Comment"
+  }, 
+  {
+      path:"contributor",
+      model: "User"
+  }
+];
+
 
 
 
@@ -79,6 +90,9 @@ router.post('/:id/add-after', isLoggedIn, (req, res, next) => {
 
 router.get('/all-photos', (req, res) => {
     Photo.find()
+    .populate({
+      path: "contributor"
+    })
       .then(photosFromDB => {
 
         res.json({ photos: photosFromDB });
@@ -88,6 +102,9 @@ router.get('/all-photos', (req, res) => {
 
 router.get('/:id/tag', (req, res) => {
     Photo.find({"tags" : { $in : [`${req.params.id}`]  } } )
+    .populate({
+      path: "contributor"
+    })
       .then(photosFromDB => {
 
         res.json({ photos: photosFromDB });
@@ -106,10 +123,13 @@ router.get('/:/user-photos', (req, res) => {
       .catch(err => console.log(`Error while getting the photos from the DB: ${err}`));
   });
 
-  router.get('/:id/profile', (req, res, next) => {
+  router.get('/:id/contributor', (req, res, next) => {
     User.findById(req.params.id)
     .then(function(foundUser){
       Photo.find({contributor: req.params.id})
+      .populate({
+        path: "contributor"
+      })
       .then(function(foundPhotos){
         res.json({foundUser: foundUser, foundPhotos: foundPhotos}) })
      
@@ -124,14 +144,23 @@ router.get('/:/user-photos', (req, res) => {
 router.get('/:id/details', (req, res, next) => {
 
     Photo.findById(req.params.id)
-    .populate({
-      path: "comments",
-      populate: {
-        path: "user",
-      },
-    })
+    .populate(query
+      
+      
+    //   {
+    //   path:"contributor"})
+    // .populate({
+    //   path:"comments", 
+    //   populate: {path: "user"}
+    // }
+    
+    
+    )
+
+    
       .then(function (result) {
         res.json({result});
+        console.log("RESULT!!!", result)
       })
       .catch(function (error) {
         res.json(error);
