@@ -144,7 +144,17 @@ router.get('/:/user-photos', (req, res) => {
 router.get('/:id/details', (req, res, next) => {
 
     Photo.findById(req.params.id)
-    .populate(query
+    .populate({path: "contributor"})
+    .populate({
+      path: "comments",
+      populate: {
+        path: "user",
+      },
+    })
+      
+      
+      
+      // query
       
       
     //   {
@@ -155,7 +165,7 @@ router.get('/:id/details', (req, res, next) => {
     // }
     
     
-    )
+    // )
 
     
       .then(function (result) {

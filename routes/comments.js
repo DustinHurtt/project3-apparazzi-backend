@@ -20,7 +20,7 @@ router.post('/:id/add-comment', isLoggedIn, (req, res, next) => {
             {$addToSet: {comments: newComment}}
         )
         .then(function (result) {
-          res.json(result);
+          res.json(newComment);
         })
       })
       .catch(function (error) {
