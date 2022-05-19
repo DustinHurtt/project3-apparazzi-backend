@@ -29,7 +29,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors())
+app.use(cors({
+  origin: [process.env.FRONTEND_URL]
+  // origin: ['http://localhost:3000']
+}))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
