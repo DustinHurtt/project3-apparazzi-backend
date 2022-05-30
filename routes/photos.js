@@ -26,20 +26,8 @@ let query = [
 
 router.post("/new-photo", isLoggedIn, upload.single("imageUrl"), async (req, res) => {
   try {
-    // Upload image to cloudinary
+
     const result = await cloudinary.uploader.upload(req.file.path, {image_metadata: true});
-     // Create new user
-    // let photo = new Photo({
-    //   description: req.body.description,
-    //   tags: req.body.tags,
-    //   postDate: result.created_at,
-    //   imageUrl: result.secure_url,
-    //   cloudinary_id: result.public_id,
-    //   latitude: result.image_metadata.GPSLatitude,
-    //   longitude: result.image_metadata.GPSLongitude,
-    //   photographedDate: result.image_metadata.CreateDate,
-    //   contributor: req.user._id
-    // });
 
     Photo.create({ 
       description: req.body.description,
@@ -53,16 +41,13 @@ router.post("/new-photo", isLoggedIn, upload.single("imageUrl"), async (req, res
       contributor: req.user._id
     })
     .then(newlyCreatedPhotoFromDB => {
-      // console.log(result)
+
       
       res.json({newlyCreatedPhotoFromDB });
-      console.log("try", newlyCreatedPhotoFromDB);
+
     })
     .catch(error => console.log(`Error while creating a new photo: ${error}`));
-    // Save user
-    // await photo.save();
-    // res.json(photo);
-    // console.log(result)
+
   } catch (err) {
     console.log(err);
   }
@@ -70,7 +55,7 @@ router.post("/new-photo", isLoggedIn, upload.single("imageUrl"), async (req, res
 });
 
 router.post('/:id/add-after', isLoggedIn, (req, res, next) => {
-  console.log("Params", req.params.id)
+
 
   Photo.findByIdAndUpdate(req.params.id, { 
 
@@ -108,7 +93,7 @@ router.get('/:id/tag', (req, res) => {
       .then(photosFromDB => {
 
         res.json({ photos: photosFromDB });
-        console.log("TagsfromDB", photosFromDB)
+
       })
       .catch(err => console.log(`Error while getting the photos from the DB: ${err}`));
   });
@@ -151,26 +136,10 @@ router.get('/:id/details', (req, res, next) => {
         path: "user",
       },
     })
-      
-      
-      
-      // query
-      
-      
-    //   {
-    //   path:"contributor"})
-    // .populate({
-    //   path:"comments", 
-    //   populate: {path: "user"}
-    // }
-    
-    
-    // )
-
-    
+          
       .then(function (result) {
         res.json({result});
-        console.log("RESULT!!!", result)
+
       })
       .catch(function (error) {
         res.json(error);

@@ -104,7 +104,7 @@ router.post('/login', function(req, res, next) {
 
 
 router.get('/login-test', isLoggedIn, (req, res)=>{
-  console.log('USER', req.user)
+
   res.json({message: "You are logged in"})
 })
 
@@ -124,13 +124,10 @@ router.post("/edit-profile-with-picture", isLoggedIn, upload.single("imageUrl"),
     })
     .then(newlyCreatedProfile => {
       res.json({newlyCreatedProfile });
-      // console.log(newlyCreatedProfile);
+
     })
     .catch(error => console.log(`Error while creating a new profile: ${error}`));
-    // Save user
 
-    // res.json(photo);
-    // console.log(result)
   } catch (err) {
     console.log(err);
   }
