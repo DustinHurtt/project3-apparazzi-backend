@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
- 
+
 const photoSchema = new Schema(
   {
     description: String,
@@ -11,16 +11,13 @@ const photoSchema = new Schema(
     latitude: String,
     longitude: String,
     photographedDate: String,
-    contributor: {type: Schema.Types.ObjectId,
-          ref: "User",
-          required: true},
-          
-    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
+    contributor: { type: Schema.Types.ObjectId, ref: "User", required: true },
 
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
- 
-module.exports = model('Photo', photoSchema);
+
+module.exports = model("Photo", photoSchema);

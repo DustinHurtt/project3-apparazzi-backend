@@ -1,25 +1,17 @@
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 const isLoggedIn = async (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1];
-      if (!token || token === "null") {
-        console.log("authorization", req.headers)
-        console.log("NO TOKEN");
-        return res.status(400).json({ message: "Token not found" });
-      }
-      try {
-        const tokenInfo = jwt.verify(token, process.env.SECRET);
-        // console.log(tokenInfo);
-        // console.log("Files", req.files);
-        // console.log("FILE", req.file);
-        // console.log('REQ', req)
-        //If you have req.payload, change line 12 to:
-        //req.payload = tokenInfo;
-        req.user = tokenInfo;
-        next();
-      } catch (error) {
-        return res.json(error);
-      }
-    };
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token || token === "null") {
+    return res.status(400).json({ message: "Token not found" });
+  }
+  try {
+    const tokenInfo = jwt.verify(token, process.env.SECRET);
+    req.user = tokenInfo;
+    next();
+  } catch (error) {
+    return res.json(error);
+  }
+};
 
-module.exports = isLoggedIn
+module.exports = isLoggedIn;
