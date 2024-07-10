@@ -86,7 +86,7 @@ router.post("/login", function (req, res, next) {
     });
 });
 
-router.get("/login-test", isLoggedIn, (req, res) => {
+router.get("/verify", isLoggedIn, (req, res) => {
   res.json({ message: "You are logged in" });
 });
 

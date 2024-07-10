@@ -24,22 +24,22 @@ router.post(
   isLoggedIn,
   upload.single("imageUrl"),
   async (req, res) => {
-    console.log("Reached new-photo route", req.file.path)
+    console.log("Reached new-photo route", req.file.path);
     try {
       const result = await cloudinary.uploader.upload(req.file.path, {
         image_metadata: true,
       });
 
-      let alternateUrl
+      let alternateUrl;
 
-      if (result.secure_url.split('.')[3] === 'heic') {
-        console.log("WE have an HEIC FILE!!!!!")
+      if (result.secure_url.split(".")[3] === "heic") {
+        console.log("WE have an HEIC FILE!!!!!");
         const newResult = await cloudinary.uploader.upload(req.file.path, {
           image_metadata: true,
-          format: "jpg"
+          format: "jpg",
         });
 
-        alternateUrl = newResult.secure_url
+        alternateUrl = newResult.secure_url;
       }
 
       Photo.create({
@@ -60,7 +60,7 @@ router.post(
           console.log(`Error while creating a new photo: ${error}`)
         );
     } catch (err) {
-      console.log({errorMessage: "Error posting photo", err});
+      console.log({ errorMessage: "Error posting photo", err });
     }
   }
 );
