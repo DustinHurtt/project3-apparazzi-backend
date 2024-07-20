@@ -42,7 +42,7 @@ router.post("/signup", function (req, res, next) {
               expiresIn: "24hr",
             });
 
-            username, email, name, bio, imageUrl, location
+            // username, email, name, bio, imageUrl, location
             
 
             res.json({ token: token, id: createdUser._id });
