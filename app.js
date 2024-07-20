@@ -24,11 +24,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.use(
-  cors({
-    orgin: [ process.env.FRONTEND_URL || 'http://localhost:3000' || 'http:localhost:5173' ]
-  })
-);
+app.use(cors())
+
+// app.use(
+//   cors({
+//     orgin: [ process.env.FRONTEND_URL || 'http://localhost:3000' || 'http:localhost:5173' ]
+//   })
+// );
 // app.use(
 //   cors({
 //     origin: [process.env.FRONTEND_URL],
