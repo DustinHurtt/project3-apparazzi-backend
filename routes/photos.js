@@ -6,18 +6,8 @@ const User = require("../models/User.model");
 
 const cloudinary = require("../middleware/cloudinary");
 const upload = require("../middleware/multer");
-const isLoggedIn = require("../middleware/isLoggedIn");
+const isLoggedIn = require("../middleware/isLoggedIn");quer
 
-let query = [
-  {
-    path: "comments",
-    model: "Comment",
-  },
-  {
-    path: "contributor",
-    model: "User",
-  },
-];
 
 router.post(
   "/new-photo",

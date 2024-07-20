@@ -14,7 +14,10 @@ const userSchema = new Schema(
     email: String,
     name: String,
     bio: String,
-    imageUrl: String,
+    imageUrl: {
+      type: String,
+      default: "https://cvhrma.org/wp-content/uploads/2015/07/default-profile-photo.jpg"
+    },
     location: String,
   },
   {

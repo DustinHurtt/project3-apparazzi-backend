@@ -41,6 +41,10 @@ router.post("/signup", function (req, res, next) {
               algorithm: "HS256",
               expiresIn: "24hr",
             });
+
+            username, email, name, bio, imageUrl, location
+            
+
             res.json({ token: token, id: createdUser._id });
           })
           .catch((err) => {

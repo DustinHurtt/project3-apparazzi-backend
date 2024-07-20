@@ -16,15 +16,13 @@ var commentsRouter = require("./routes/comments");
 
 var app = express();
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+
 
 app.use(
   cors()
@@ -59,7 +57,7 @@ app.use(function (err, req, res, next) {
 
 mongoose
   .connect(
-    process.env.MONGODB_URI || "mongodb://0.0.0.0/project3-apparazzi-backend"
+    process.env.MONGODB_URI 
   )
   .then((x) =>
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
