@@ -41,6 +41,10 @@ router.post("/signup", function (req, res, next) {
               algorithm: "HS256",
               expiresIn: "24hr",
             });
+
+            username, email, name, bio, imageUrl, location
+            
+
             res.json({ token: token, id: createdUser._id });
           })
           .catch((err) => {
@@ -86,7 +90,7 @@ router.post("/login", function (req, res, next) {
     });
 });
 
-router.get("/login-test", isLoggedIn, (req, res) => {
+router.get("/verify", isLoggedIn, (req, res) => {
   res.json({ message: "You are logged in" });
 });
 
