@@ -13,6 +13,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var photosRouter = require("./routes/photos");
 var commentsRouter = require("./routes/comments");
+var authRouter = require('./routes/auth')
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use(cors())
 // );
 
 app.use("/", indexRouter);
+app.use('/auth', authRouter)
 app.use("/users", usersRouter);
 app.use("/photos", photosRouter);
 app.use("/comments", commentsRouter);
